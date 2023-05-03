@@ -1,4 +1,14 @@
+Chart.defaults.color = "#fff";
+Chart.defaults.borderColor = "#444";
+
 const printCharts = () => {
+	fetchCoasterData(
+		"https://coaster-api.herokuapp.com",
+		"https://coaster-api.herokuapp.com/country/Spain",
+	).then(([allCoasters, nationalCoaster]) => {
+		console.log(allCoasters);
+		console.log(nationalCoaster);
+	});
 	renderModelsChart();
 };
 
@@ -8,12 +18,18 @@ const renderModelsChart = () => {
 		datasets: [
 			{
 				data: [10, 20, 30],
-				borderColor: ["red", "green", "blue"],
-				backgroundColor: ["blue", "green", "pink"],
+				borderColor: getDataColors(),
+				backgroundColor: getDataColors(20),
 			},
 		],
 	};
-	new Chart("modelsChart", { type: "doughnut", data });
+	const options = {
+		plugins: {
+			legend: { position: "left" },
+		},
+	};
+
+	new Chart("modelsChart", { type: "doughnut", data, options });
 };
 
 printCharts();
